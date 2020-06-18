@@ -41,8 +41,31 @@ class Airplane {
 */
 
 class Person {
-
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach =[];
+  }
+  eat(food){
+    if(this.stomach.length < 10){
+      this.stomach.push(food)
+    }
+  }
+  poop(){
+    this.stomach = [];
+  }
+  toString(){
+    return `${this.name}, ${this.age}`
+  }
 }
+
+const sami = new Person("sami", 25); //this is a test.
+sami.eat("pizza"); //this is a test.
+console.log(sami); //this is a test.
+sami.poop(); //this is a test.
+console.log(sami) //this is a test.
+console.log(sami.toString()); //this is a test.
+
 
 /*
   TASK 2
@@ -59,8 +82,37 @@ class Person {
 */
 
 class Car {
-
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank += gallons;
+  }
+  drive(distance){
+    let drivenGallons = distance/this.milesPerGallon;
+    if(this.tank > drivenGallons){
+      this.tank -=drivenGallons;
+      this.odometer +=distance;
+    } else {
+       let theDiffrenceGallons = drivenGallons - this.tank
+       let unDrivenDistance = this.milesPerGallon * theDiffrenceGallons;
+       let drivenDistance = distance -unDrivenDistance;
+       this.tank = 0;
+       this.odometer += drivenDistance
+       return `I ran out of fuel at ${this.odometer} miles!`;
+    }
+   }
 }
+
+const SamiCar = new Car("tesla", 100);//this is a test.
+console.log(SamiCar);//this is a test.
+SamiCar.fill(2);//this is a test.
+console.log(SamiCar);//this is a test.
+console.log(SamiCar.drive(200))//this is a test.
+ 
 
 /*
   TASK 3
@@ -75,8 +127,19 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-
+  constructor(object){
+    this.name = object.name;
+    this.age = object.age;
+    this.location =object.location;
+  }
+  speak(){
+    return `Hello my name is ${this.name}, I am from ${this.location}`;
+  }
 }
+
+const notSami = new Lambdasian({name:"notSami",age: 25, location: "Seattle"});//this is a test.
+console.log(notSami);//this is a test.
+console.log(notSami.speak()); //this is a test.
 
 /*
   TASK 4
@@ -92,9 +155,33 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian {
+  constructor(object){
+    super(object);
+    this.specialty = object.specialty;
+    this.favLanguage = object.favLanguage;
+    this.catchPhrase = object.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(studentObj){
+    return `${studentObj.name} receives a perfect score on ${studentObj.subject}`;
+  }
+  randomGrade(student) {
+    student.grade += Math.floor(Math.random()*50);
+  } //STRETCH PROBLEM 
 }
+
+
+const samiTheInstructor = new Instructor({name: "samiTheInstructor", age: 65, location: "bellevue", specialty: "redux", favLanguage: "JavaScript", catchPhrase: "(Three words:) Fab-u-LOUS!" }); // this is a test.
+console.log(samiTheInstructor);//this is a test.
+console.log(samiTheInstructor.demo("JS"));//this is a test.
+console.log(samiTheInstructor.grade({name: "average joe", subject: "NOTHING!!!"})); // this is a test.
+
+
+
+
 
 /*
   TASK 5
@@ -111,9 +198,43 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian  {
+  constructor(object) {
+    super(object);
+    this.previousBackground = object.previousBackground;
+    this.className = object.className;
+    this.favSubjects = object.favSubjects;
+    this.grade =object.grade; //STRETCH PROBLEM 
+  }
+  listSubjects(){
+     return `Loving ${this.favSubjects.toString()}`;
+  }
+  PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  graduate(){
+    if(this.grade > 70){
+      return `congratulations you graduate with a grade of ${this.grade}`;
+    } else{
+      return `unfortunately you have not meet the minimum requirements`;
+    }
+  } //STRETCH PROBLEM 
 }
+
+
+
+
+const mike = new Student({name: "mike", age: 19, location: "Hot Coffee, Mississippi", previousBackground: "eat sleep coffee repeat", className: "WEB33", favSubjects: ["CSS", "JS","HTML"], grade: 50 });//this is a test.
+console.log(mike);//this is a test.
+console.log(mike.listSubjects());//this is a test.
+console.log(mike.PRAssignment("Scope and Closure")); //this is a test.
+console.log(mike.sprintChallenge("Prototypes and Inheritance"));//this is a test.
+
+samiTheInstructor.randomGrade(mike) //STRETCH PROBLEM 
+console.log(mike.graduate())
 
 /*
   TASK 6
@@ -128,9 +249,25 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor {
+  constructor(object){
+    super(object);
+    this.gradClassName = object.gradClassName;
+    this.favInstructor = object.favInstructor;
+  }
+  standUp(slackChannel){
+    return `${this.name} announces to ${slackChannel}, @channel standy times!`
+  }
+  debugsCode(student, subject){
+    return`${this.name} debugs ${student.name}'s code on ${subject}`
+  }
 }
+
+const bigBoss = new ProjectManager({name: "The Big Boss Sami", age: 44, location: "Bigfoot, Texas", specialty: "asking for feedback", favLanguage: "JS", catchPhrase: "Please complete this short survey", gradClassName: "CS1", favInstructor: "NO Body" });//this is a test.
+console.log(bigBoss);//this is a test.
+console.log(bigBoss.standUp("ls2006_full_time"));//this is a test.
+console.log(bigBoss.debugsCode(mike, "JS classes"))//this is a test.
+
 
 /*
   STRETCH PROBLEM (no tests!)
@@ -139,6 +276,7 @@ class ProjectManager {
     - Add a graduate method to a student.
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+      
 */
 
 ///////// END OF CHALLENGE /////////
