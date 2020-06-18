@@ -127,17 +127,17 @@ console.log(SamiCar.drive(200))//this is a test.
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-  constructor(name, age, location){
-    this.name = name;
-    this.age = age;
-    this.location =location;
+  constructor(object){
+    this.name = object.name;
+    this.age = object.age;
+    this.location =object.location;
   }
   speak(){
     return `Hello my name is ${this.name}, I am from ${this.location}`;
   }
 }
 
-const notSami = new Lambdasian("notSami", 25, "Seattle");//this is a test.
+const notSami = new Lambdasian({name:"notSami",age: 25, location: "Seattle"});//this is a test.
 console.log(notSami);//this is a test.
 console.log(notSami.speak()); //this is a test.
 
@@ -168,12 +168,18 @@ class Instructor extends Lambdasian {
   grade(studentObj){
     return `${studentObj.name} receives a perfect score on ${studentObj.subject}`;
   }
+  randomGrade(student) {
+    student.grade += Math.floor(Math.random()*50);
+  } //STRETCH PROBLEM 
 }
+
 
 const samiTheInstructor = new Instructor({name: "samiTheInstructor", age: 65, location: "bellevue", specialty: "redux", favLanguage: "JavaScript", catchPhrase: "(Three words:) Fab-u-LOUS!" }); // this is a test.
 console.log(samiTheInstructor);//this is a test.
 console.log(samiTheInstructor.demo("JS"));//this is a test.
 console.log(samiTheInstructor.grade({name: "average joe", subject: "NOTHING!!!"})); // this is a test.
+
+
 
 
 
@@ -198,25 +204,37 @@ class Student extends Lambdasian  {
     this.previousBackground = object.previousBackground;
     this.className = object.className;
     this.favSubjects = object.favSubjects;
+    this.grade =object.grade; //STRETCH PROBLEM 
   }
   listSubjects(){
      return `Loving ${this.favSubjects.toString()}`;
   }
   PRAssignment(subject){
-    return `${this.name.name} has submitted a PR for ${subject}`;
+    return `${this.name} has submitted a PR for ${subject}`;
   }
   sprintChallenge(subject){
-    return `${this.name.name} has begun sprint challenge on ${subject}`;
+    return `${this.name} has begun sprint challenge on ${subject}`;
   }
+  graduate(){
+    if(this.grade > 70){
+      return `congratulations you graduate with a grade of ${this.grade}`;
+    } else{
+      return `unfortunately you have not meet the minimum requirements`;
+    }
+  } //STRETCH PROBLEM 
 }
 
-const mike = new Student({name: "mike", age: 19, location: "Hot Coffee, Mississippi", previousBackground: "eat sleep coffee repeat", className: "WEB33", favSubjects: ["CSS", "JS","HTML"] });//this is a test.
+
+
+
+const mike = new Student({name: "mike", age: 19, location: "Hot Coffee, Mississippi", previousBackground: "eat sleep coffee repeat", className: "WEB33", favSubjects: ["CSS", "JS","HTML"], grade: 50 });//this is a test.
 console.log(mike);//this is a test.
 console.log(mike.listSubjects());//this is a test.
 console.log(mike.PRAssignment("Scope and Closure")); //this is a test.
 console.log(mike.sprintChallenge("Prototypes and Inheritance"));//this is a test.
 
-
+samiTheInstructor.randomGrade(mike) //STRETCH PROBLEM 
+console.log(mike.graduate())
 
 /*
   TASK 6
@@ -238,10 +256,10 @@ class ProjectManager extends Instructor {
     this.favInstructor = object.favInstructor;
   }
   standUp(slackChannel){
-    return `${this.name.name} announces to ${slackChannel}, @channel standy times!`
+    return `${this.name} announces to ${slackChannel}, @channel standy times!`
   }
   debugsCode(student, subject){
-    return`${this.name.name} debugs ${student.name.name}'s code on ${subject}`
+    return`${this.name} debugs ${student.name}'s code on ${subject}`
   }
 }
 
@@ -258,6 +276,7 @@ console.log(bigBoss.debugsCode(mike, "JS classes"))//this is a test.
     - Add a graduate method to a student.
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+      
 */
 
 ///////// END OF CHALLENGE /////////
