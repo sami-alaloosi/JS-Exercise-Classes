@@ -214,7 +214,7 @@ const mike = new Student({name: "mike", age: 19, location: "Hot Coffee, Mississi
 console.log(mike);//this is a test.
 console.log(mike.listSubjects());//this is a test.
 console.log(mike.PRAssignment("Scope and Closure")); //this is a test.
-console.log(mike.sprintChallenge("Prototypes and Inheritance"));
+console.log(mike.sprintChallenge("Prototypes and Inheritance"));//this is a test.
 
 
 
@@ -231,9 +231,25 @@ console.log(mike.sprintChallenge("Prototypes and Inheritance"));
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor {
+  constructor(object){
+    super(object);
+    this.gradClassName = object.gradClassName;
+    this.favInstructor = object.favInstructor;
+  }
+  standUp(slackChannel){
+    return `${this.name.name} announces to ${slackChannel}, @channel standy times!`
+  }
+  debugsCode(student, subject){
+    return`${this.name.name} debugs ${student.name.name}'s code on ${subject}`
+  }
 }
+
+const bigBoss = new ProjectManager({name: "The Big Boss Sami", age: 44, location: "Bigfoot, Texas", specialty: "asking for feedback", favLanguage: "JS", catchPhrase: "Please complete this short survey", gradClassName: "CS1", favInstructor: "NO Body" });//this is a test.
+console.log(bigBoss);//this is a test.
+console.log(bigBoss.standUp("ls2006_full_time"));//this is a test.
+console.log(bigBoss.debugsCode(mike, "JS classes"))//this is a test.
+
 
 /*
   STRETCH PROBLEM (no tests!)
