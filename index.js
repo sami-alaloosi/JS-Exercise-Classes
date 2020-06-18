@@ -155,9 +155,27 @@ console.log(notSami.speak()); //this is a test.
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
-
+class Instructor extends Lambdasian {
+  constructor(object){
+    super(object);
+    this.specialty = object.specialty;
+    this.favLanguage = object.favLanguage;
+    this.catchPhrase = object.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(studentObj){
+    return `${studentObj.name} receives a perfect score on ${studentObj.subject}`;
+  }
 }
+
+const samiTheInstructor = new Instructor({name: "samiTheInstructor", age: 65, location: "bellevue", specialty: "redux", favLanguage: "JavaScript", catchPhrase: "(Three words:) Fab-u-LOUS!" }); // this is a test.
+console.log(samiTheInstructor);//this is a test.
+console.log(samiTheInstructor.demo("JS"));//this is a test.
+console.log(samiTheInstructor.grade({name: "average joe", subject: "NOTHING!!!"})); // this is a test.
+
+
 
 /*
   TASK 5
