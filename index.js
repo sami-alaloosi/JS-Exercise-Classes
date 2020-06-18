@@ -192,9 +192,31 @@ console.log(samiTheInstructor.grade({name: "average joe", subject: "NOTHING!!!"}
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian  {
+  constructor(object) {
+    super(object);
+    this.previousBackground = object.previousBackground;
+    this.className = object.className;
+    this.favSubjects = object.favSubjects;
+  }
+  listSubjects(){
+     return `Loving ${this.favSubjects.toString()}`;
+  }
+  PRAssignment(subject){
+    return `${this.name.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name.name} has begun sprint challenge on ${subject}`;
+  }
 }
+
+const mike = new Student({name: "mike", age: 19, location: "Hot Coffee, Mississippi", previousBackground: "eat sleep coffee repeat", className: "WEB33", favSubjects: ["CSS", "JS","HTML"] });//this is a test.
+console.log(mike);//this is a test.
+console.log(mike.listSubjects());//this is a test.
+console.log(mike.PRAssignment("Scope and Closure")); //this is a test.
+console.log(mike.sprintChallenge("Prototypes and Inheritance"));
+
+
 
 /*
   TASK 6
